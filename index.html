@@ -22,7 +22,11 @@ nav{background:#fff;border-bottom:0.5px solid rgba(0,0,0,0.1);padding:0 2.5rem;d
 .nav-links button:hover{background:#f0f0ee;color:#1a1a1a}
 .nav-links button.active{color:#1D9E75;background:#E1F5EE;font-weight:600}
 
-.hero{padding:5.5rem 2.5rem 4.5rem;background:#fff}
+.hero{padding:5.5rem 2.5rem 4.5rem;background:#fff;display:flex;align-items:center;gap:4rem;max-width:1100px;margin:0 auto;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:url('hero-bg.png.webp') right center/contain no-repeat;opacity:0.07;pointer-events:none;z-index:0}
+.hero-text{flex:1;min-width:0;position:relative;z-index:1}
+.hero-text{flex:1;min-width:0}
+.hero-illustration{flex:0 0 420px;display:flex;align-items:center;justify-content:center}
 .hero-eyebrow{display:flex;align-items:center;gap:8px;margin-bottom:1.75rem}
 .eyebrow-line{width:24px;height:1.5px;background:#1D9E75}
 .eyebrow-text{font-size:12px;color:#1D9E75;font-weight:600;letter-spacing:0.1em;text-transform:uppercase}
@@ -161,7 +165,8 @@ nav{background:#fff;border-bottom:0.5px solid rgba(0,0,0,0.1);padding:0 2.5rem;d
 @media(max-width:600px){
   nav{padding:0 1.25rem}
   .nav-links button{padding:6px 9px;font-size:12px}
-  .hero,.about-hero,.courses-hero,.loc-hero,.contact-hero{padding:3.5rem 1.25rem 3rem}
+  .hero,.about-hero,.courses-hero,.loc-hero,.contact-hero{padding:3.5rem 1.25rem 3rem;flex-direction:column}
+  .hero-illustration{flex:none;width:100%;max-width:260px;margin:0 auto}
   .hero h1{font-size:28px}
   .hero-stats{gap:1.5rem;flex-wrap:wrap}
   .features-band,.main-section{padding-left:1.25rem;padding-right:1.25rem}
@@ -197,18 +202,118 @@ nav{background:#fff;border-bottom:0.5px solid rgba(0,0,0,0.1);padding:0 2.5rem;d
 <!-- ===== 메인 ===== -->
 <div class="page active" id="page-home">
   <div class="hero">
-    <div class="hero-eyebrow"><div class="eyebrow-line"></div><span class="eyebrow-text">교육부 인가 평생교육원 · 설립 2026</span></div>
-    <h1>AI 시대를 준비하는<br><em>가장 신뢰할 수 있는</em><br>배움의 공간</h1>
-    <p class="hero-desc">누구나, 언제든지, 자신의 속도로. 인공지능 전문 교육기관에서 실무 중심의 체계적인 AI 역량을 키워보세요.</p>
-    <div class="hero-actions">
-      <button class="btn-fill" onclick="showPage('courses')">과정 살펴보기 <i class="ti ti-arrow-right"></i></button>
-      <button class="btn-ghost" onclick="showPage('about')">교육원 소개</button>
+    <div class="hero-text">
+      <div class="hero-eyebrow"><div class="eyebrow-line"></div><span class="eyebrow-text">교육부 인가 평생교육원 · 설립 2026</span></div>
+      <h1>AI 시대를 준비하는<br><em>가장 신뢰할 수 있는</em><br>배움의 공간</h1>
+      <p class="hero-desc">누구나, 언제든지, 자신의 속도로. 인공지능 전문 교육기관에서 실무 중심의 체계적인 AI 역량을 키워보세요.</p>
+      <div class="hero-actions">
+        <button class="btn-fill" onclick="showPage('courses')">과정 살펴보기 <i class="ti ti-arrow-right"></i></button>
+        <button class="btn-ghost" onclick="showPage('about')">교육원 소개</button>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item"><div class="num">3,200<span>+</span></div><div class="lbl">누적 수료생</div></div>
+        <div class="stat-item"><div class="num">94<span>%</span></div><div class="lbl">수강생 만족도</div></div>
+        <div class="stat-item"><div class="num">2026<span>년</span></div><div class="lbl">설립</div></div>
+        <div class="stat-item"><div class="num">8<span>개</span></div><div class="lbl">운영 과정</div></div>
+      </div>
     </div>
-    <div class="hero-stats">
-      <div class="stat-item"><div class="num">3,200<span>+</span></div><div class="lbl">누적 수료생</div></div>
-      <div class="stat-item"><div class="num">94<span>%</span></div><div class="lbl">수강생 만족도</div></div>
-      <div class="stat-item"><div class="num">2026<span>년</span></div><div class="lbl">설립</div></div>
-      <div class="stat-item"><div class="num">8<span>개</span></div><div class="lbl">운영 과정</div></div>
+    <div class="hero-illustration">
+      <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width:420px">
+        <defs>
+          <radialGradient id="bgGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#e8f8f2"/>
+            <stop offset="100%" stop-color="#f5fffe"/>
+          </radialGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="3" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <!-- 배경 원 -->
+        <circle cx="200" cy="200" r="180" fill="url(#bgGrad)"/>
+        <!-- 외곽 점선 링 -->
+        <circle cx="200" cy="200" r="160" fill="none" stroke="#1D9E75" stroke-width="1" stroke-dasharray="6 8" opacity="0.3"/>
+        <circle cx="200" cy="200" r="130" fill="none" stroke="#1D9E75" stroke-width="0.5" stroke-dasharray="3 10" opacity="0.2"/>
+
+        <!-- 뇌 중앙 아이콘 영역 -->
+        <circle cx="200" cy="200" r="58" fill="#1D9E75" opacity="0.08"/>
+        <circle cx="200" cy="200" r="46" fill="#1D9E75" opacity="0.12"/>
+
+        <!-- 뇌 실루엣 (심플) -->
+        <g transform="translate(200,200)" fill="none" stroke="#1D9E75" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <!-- 좌뇌 -->
+          <path d="M-4,-28 C-22,-28 -36,-16 -36,0 C-36,14 -28,24 -16,28 C-16,32 -12,36 -4,36"/>
+          <path d="M-36,0 C-40,6 -38,18 -30,22"/>
+          <path d="M-26,-20 C-32,-10 -32,4 -26,12"/>
+          <!-- 우뇌 -->
+          <path d="M4,-28 C22,-28 36,-16 36,0 C36,14 28,24 16,28 C16,32 12,36 4,36"/>
+          <path d="M36,0 C40,6 38,18 30,22"/>
+          <path d="M26,-20 C32,-10 32,4 26,12"/>
+          <!-- 중앙 연결선 -->
+          <line x1="-4" y1="-20" x2="4" y2="-20"/>
+          <line x1="-4" y1="0" x2="4" y2="0"/>
+          <line x1="-4" y1="20" x2="4" y2="20"/>
+          <line x1="-4" y1="36" x2="4" y2="36"/>
+        </g>
+
+        <!-- 노드 포인트들 (신경망) -->
+        <!-- 상단 -->
+        <circle cx="200" cy="68" r="7" fill="#1D9E75" opacity="0.9" filter="url(#glow)"/>
+        <circle cx="200" cy="68" r="3.5" fill="#fff"/>
+        <!-- 우상 -->
+        <circle cx="306" cy="107" r="6" fill="#1D9E75" opacity="0.75"/>
+        <circle cx="306" cy="107" r="3" fill="#fff"/>
+        <!-- 우중 -->
+        <circle cx="338" cy="200" r="7" fill="#1D9E75" opacity="0.9" filter="url(#glow)"/>
+        <circle cx="338" cy="200" r="3.5" fill="#fff"/>
+        <!-- 우하 -->
+        <circle cx="306" cy="293" r="6" fill="#1D9E75" opacity="0.75"/>
+        <circle cx="306" cy="293" r="3" fill="#fff"/>
+        <!-- 하단 -->
+        <circle cx="200" cy="332" r="7" fill="#1D9E75" opacity="0.9" filter="url(#glow)"/>
+        <circle cx="200" cy="332" r="3.5" fill="#fff"/>
+        <!-- 좌하 -->
+        <circle cx="94" cy="293" r="6" fill="#1D9E75" opacity="0.75"/>
+        <circle cx="94" cy="293" r="3" fill="#fff"/>
+        <!-- 좌중 -->
+        <circle cx="62" cy="200" r="7" fill="#1D9E75" opacity="0.9" filter="url(#glow)"/>
+        <circle cx="62" cy="200" r="3.5" fill="#fff"/>
+        <!-- 좌상 -->
+        <circle cx="94" cy="107" r="6" fill="#1D9E75" opacity="0.75"/>
+        <circle cx="94" cy="107" r="3" fill="#fff"/>
+
+        <!-- 연결선들 -->
+        <g stroke="#1D9E75" stroke-width="1" opacity="0.25" fill="none">
+          <line x1="200" y1="68" x2="306" y2="107"/>
+          <line x1="200" y1="68" x2="94" y2="107"/>
+          <line x1="306" y1="107" x2="338" y2="200"/>
+          <line x1="338" y1="200" x2="306" y2="293"/>
+          <line x1="306" y1="293" x2="200" y2="332"/>
+          <line x1="200" y1="332" x2="94" y2="293"/>
+          <line x1="94" y1="293" x2="62" y2="200"/>
+          <line x1="62" y1="200" x2="94" y2="107"/>
+          <!-- 중앙으로 연결 -->
+          <line x1="200" y1="68" x2="200" y2="154"/>
+          <line x1="306" y1="107" x2="244" y2="172"/>
+          <line x1="338" y1="200" x2="246" y2="200"/>
+          <line x1="306" y1="293" x2="244" y2="228"/>
+          <line x1="200" y1="332" x2="200" y2="246"/>
+          <line x1="94" y1="293" x2="156" y2="228"/>
+          <line x1="62" y1="200" x2="154" y2="200"/>
+          <line x1="94" y1="107" x2="156" y2="172"/>
+        </g>
+
+        <!-- 작은 데이터 포인트들 -->
+        <circle cx="152" cy="130" r="3.5" fill="#1D9E75" opacity="0.4"/>
+        <circle cx="248" cy="130" r="3.5" fill="#1D9E75" opacity="0.4"/>
+        <circle cx="270" cy="200" r="3.5" fill="#1D9E75" opacity="0.4"/>
+        <circle cx="130" cy="200" r="3.5" fill="#1D9E75" opacity="0.4"/>
+        <circle cx="152" cy="270" r="3.5" fill="#1D9E75" opacity="0.4"/>
+        <circle cx="248" cy="270" r="3.5" fill="#1D9E75" opacity="0.4"/>
+
+        <!-- AI 텍스트 -->
+        <text x="200" y="208" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" font-weight="700" fill="#1D9E75" letter-spacing="3" opacity="0.7">AI</text>
+      </svg>
     </div>
   </div>
 
