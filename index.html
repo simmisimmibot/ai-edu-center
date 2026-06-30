@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 평생교육원</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans KR',sans-serif;background:#f5f5f3;color:#1a1a1a}
+.page{display:none}
+.page.active{display:block}
+
+nav{background:#fff;border-bottom:0.5px solid rgba(0,0,0,0.1);padding:0 2.5rem;display:flex;align-items:center;justify-content:space-between;height:60px;position:sticky;top:0;z-index:100}
+.logo{display:flex;align-items:center;gap:10px;cursor:pointer;text-decoration:none}
+.logo-mark{width:32px;height:32px;background:#1D9E75;border-radius:8px;display:flex;align-items:center;justify-content:center}
+.logo-mark i{font-size:17px;color:#fff}
+.logo-text{font-size:14px;font-weight:600;letter-spacing:-0.01em;color:#1a1a1a}
+.logo-sub{font-size:11px;color:#888;margin-top:1px}
+.nav-links{display:flex;gap:2px}
+.nav-links button{background:none;border:none;padding:7px 14px;font-size:13px;color:#666;cursor:pointer;border-radius:6px;font-family:inherit;letter-spacing:0.01em;transition:all 0.15s}
+.nav-links button:hover{background:#f0f0ee;color:#1a1a1a}
+.nav-links button.active{color:#1D9E75;background:#E1F5EE;font-weight:600}
+
+.hero{padding:5.5rem 2.5rem 4.5rem;background:#fff}
+.hero-eyebrow{display:flex;align-items:center;gap:8px;margin-bottom:1.75rem}
+.eyebrow-line{width:24px;height:1.5px;background:#1D9E75}
+.eyebrow-text{font-size:12px;color:#1D9E75;font-weight:600;letter-spacing:0.1em;text-transform:uppercase}
+.hero h1{font-size:38px;font-weight:600;line-height:1.25;letter-spacing:-0.03em;color:#1a1a1a;max-width:500px;margin-bottom:1.25rem}
+.hero h1 em{font-style:normal;color:#1D9E75}
+.hero-desc{font-size:15px;color:#555;line-height:1.75;max-width:440px;margin-bottom:2.5rem}
+.hero-actions{display:flex;align-items:center;gap:12px}
+.btn-fill{background:#1D9E75;color:#fff;border:none;padding:11px 24px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;letter-spacing:0.01em;display:inline-flex;align-items:center;gap:6px;text-decoration:none;transition:background 0.15s}
+.btn-fill:hover{background:#0F6E56}
+.btn-ghost{background:none;border:1px solid #ddd;color:#1a1a1a;padding:11px 24px;border-radius:8px;font-size:13px;cursor:pointer;font-family:inherit;transition:background 0.15s}
+.btn-ghost:hover{background:#f5f5f3}
+.hero-stats{display:flex;gap:2.5rem;padding-top:3rem;border-top:0.5px solid rgba(0,0,0,0.08);margin-top:3rem}
+.stat-item .num{font-size:26px;font-weight:600;color:#1a1a1a;letter-spacing:-0.03em}
+.stat-item .num span{font-size:16px;color:#1D9E75}
+.stat-item .lbl{font-size:12px;color:#888;margin-top:3px}
+
+.features-band{background:#f5f5f3;border-top:0.5px solid rgba(0,0,0,0.08);border-bottom:0.5px solid rgba(0,0,0,0.08);padding:3rem 2.5rem}
+.features-band-inner{max-width:800px;margin:0 auto}
+.overline{font-size:11px;color:#1D9E75;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px}
+.section-title{font-size:20px;font-weight:600;letter-spacing:-0.02em;margin-bottom:0.75rem}
+.feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:rgba(0,0,0,0.08);border:0.5px solid rgba(0,0,0,0.08);border-radius:12px;overflow:hidden}
+.feature-cell{background:#fff;padding:1.5rem 1.25rem}
+.feature-cell i{font-size:20px;color:#1D9E75;margin-bottom:1rem;display:block}
+.feature-cell h3{font-size:13px;font-weight:600;margin-bottom:6px}
+.feature-cell p{font-size:12px;color:#666;line-height:1.6}
+
+.main-section{max-width:800px;margin:0 auto;padding:3.5rem 2.5rem}
+.section-body{font-size:14px;color:#555;line-height:1.75}
+.sep{border:none;border-top:0.5px solid rgba(0,0,0,0.08);margin:3rem 0}
+
+.review-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:1.5rem}
+.review-card{background:#fff;border:0.5px solid rgba(0,0,0,0.1);border-radius:12px;padding:1.25rem}
+.review-quote{font-size:13px;color:#555;line-height:1.75;margin-bottom:1rem;font-style:italic}
+.review-author{font-size:12px;font-weight:600;color:#1a1a1a}
+.review-course{font-size:11px;color:#888;margin-top:2px}
+
+.about-hero{padding:5rem 2.5rem 4rem;background:#fff}
+.about-pull{font-size:22px;font-weight:600;line-height:1.5;letter-spacing:-0.02em;color:#1a1a1a;max-width:560px;margin-bottom:2rem;padding-bottom:2rem;border-bottom:0.5px solid rgba(0,0,0,0.08)}
+.about-pull em{font-style:normal;color:#1D9E75}
+.about-body{font-size:14px;color:#555;line-height:1.85;max-width:560px}
+.value-list{margin-top:1.5rem;display:flex;flex-direction:column;gap:1px;background:rgba(0,0,0,0.08);border:0.5px solid rgba(0,0,0,0.08);border-radius:12px;overflow:hidden}
+.value-item{background:#fff;padding:1.25rem 1.5rem;display:flex;align-items:flex-start;gap:1rem}
+.value-num{font-size:11px;color:#1D9E75;font-weight:600;min-width:20px;padding-top:2px}
+.value-content h3{font-size:14px;font-weight:600;margin-bottom:4px}
+.value-content p{font-size:13px;color:#666;line-height:1.65}
+.team-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-top:1.5rem}
+.team-card{background:#fff;border:0.5px solid rgba(0,0,0,0.1);border-radius:12px;padding:1.25rem 1rem;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px}
+.avatar{width:44px;height:44px;border-radius:50%;background:#E1F5EE;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#0F6E56}
+.team-name{font-size:13px;font-weight:600}
+.team-role{font-size:11px;color:#888;line-height:1.5;margin-top:2px}
+
+.courses-hero{padding:5rem 2.5rem 4rem;background:#fff}
+.course-tier{margin-bottom:2.5rem}
+.tier-label{display:flex;align-items:center;gap:10px;margin-bottom:1rem}
+.tier-badge{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;letter-spacing:0.05em}
+.tier-badge.basic{background:#E1F5EE;color:#0F6E56}
+.tier-badge.advanced{background:#EEEDFE;color:#534AB7}
+.tier-badge.special{background:#FAEEDA;color:#854F0B}
+.course-row{background:#fff;border:0.5px solid rgba(0,0,0,0.1);border-radius:12px;overflow:hidden;margin-bottom:8px}
+.course-row-inner{padding:1.25rem 1.5rem;display:flex;align-items:flex-start;gap:1.25rem}
+.course-icon-wrap{width:40px;height:40px;border-radius:8px;background:#f5f5f3;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.course-icon-wrap i{font-size:18px;color:#1D9E75}
+.course-icon-wrap.purple{background:#EEEDFE}
+.course-icon-wrap.purple i{color:#534AB7}
+.course-icon-wrap.amber{background:#FAEEDA}
+.course-icon-wrap.amber i{color:#854F0B}
+.c-title{font-size:14px;font-weight:600;margin-bottom:4px}
+.c-desc{font-size:12px;color:#666;line-height:1.65;margin-bottom:8px}
+.c-meta{display:flex;gap:6px;flex-wrap:wrap}
+.pill{font-size:11px;padding:2px 9px;border-radius:20px;background:#f5f5f3;color:#666;border:0.5px solid rgba(0,0,0,0.1)}
+.pill.accent{background:#E1F5EE;color:#0F6E56;border-color:#9FE1CB}
+
+.loc-hero{padding:5rem 2.5rem 4rem;background:#fff}
+.map-frame{border:0.5px solid rgba(0,0,0,0.1);border-radius:12px;overflow:hidden;margin-top:1.5rem}
+.map-placeholder{height:200px;background:#f5f5f3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}
+.map-placeholder i{font-size:28px;color:#1D9E75}
+.map-placeholder span{font-size:13px;color:#666}
+.info-rows{padding:0 1.5rem}
+.info-row{display:flex;gap:1rem;padding:12px 0;border-bottom:0.5px solid rgba(0,0,0,0.08);font-size:13px}
+.info-row:last-child{border-bottom:none}
+.info-label{color:#888;min-width:68px}
+.transport-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:1.5rem}
+.transport-card{background:#fff;border:0.5px solid rgba(0,0,0,0.1);border-radius:12px;padding:1.25rem 1rem}
+.transport-card i{font-size:18px;color:#1D9E75;margin-bottom:10px;display:block}
+.transport-card h3{font-size:13px;font-weight:600;margin-bottom:6px}
+.transport-card p{font-size:12px;color:#666;line-height:1.65}
+
+.contact-hero{padding:5rem 2.5rem 4rem;background:#fff}
+.channel-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:1.5rem}
+.channel-card{background:#f5f5f3;border-radius:12px;padding:1.5rem 1.25rem;display:flex;align-items:center;gap:1rem;text-decoration:none;border:0.5px solid transparent;transition:border-color 0.15s;cursor:pointer}
+.channel-card:hover{border-color:rgba(0,0,0,0.15)}
+.channel-icon{width:44px;height:44px;border-radius:10px;background:#E1F5EE;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.channel-icon i{font-size:20px;color:#1D9E75}
+.channel-icon.kakao{background:#FAEEDA}
+.channel-icon.kakao i{color:#854F0B}
+.channel-label{font-size:13px;font-weight:600;color:#1a1a1a;margin-bottom:3px}
+.channel-value{font-size:12px;color:#666}
+.channel-action{font-size:11px;color:#1D9E75;margin-top:3px}
+.channel-action.kakao-action{color:#854F0B}
+.kakao-badge{display:inline-block;font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:#FAEEDA;color:#854F0B;vertical-align:middle;margin-left:6px}
+
+.form-card{background:#fff;border:0.5px solid rgba(0,0,0,0.1);border-radius:12px;padding:1.75rem;margin-top:1.5rem}
+.form-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:12px;color:#666;margin-bottom:5px;letter-spacing:0.02em}
+.field input,.field select,.field textarea{width:100%;font-family:inherit;font-size:13px;padding:9px 12px;border:0.5px solid rgba(0,0,0,0.2);border-radius:8px;background:#fff;color:#1a1a1a;outline:none;transition:border-color 0.15s}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:#1D9E75}
+.field textarea{height:100px;resize:vertical}
+.agree-row{display:flex;align-items:center;gap:8px;margin-bottom:1.25rem}
+.agree-row input{width:auto;margin:0;accent-color:#1D9E75}
+.agree-row label{font-size:12px;color:#666}
+.submit-btn{width:100%;background:#1D9E75;color:#fff;border:none;padding:12px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:background 0.15s}
+.submit-btn:hover{background:#0F6E56}
+.submit-btn:disabled{background:#0F6E56;cursor:default}
+
+.email-copy-bar{margin-top:1.25rem;background:#f5f5f3;border-radius:12px;padding:1.25rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.email-copy-btn{background:#fff;border:0.5px solid rgba(0,0,0,0.15);padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;color:#1D9E75;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:6px;white-space:nowrap;transition:background 0.15s}
+.email-copy-btn:hover{background:#f5f5f3}
+
+.faq-item{border-bottom:0.5px solid rgba(0,0,0,0.08);padding:1.25rem 0}
+.faq-item:last-child{border-bottom:none}
+.faq-q{font-size:13px;font-weight:600;margin-bottom:6px;display:flex;gap:10px}
+.faq-q-badge{color:#1D9E75;flex-shrink:0}
+.faq-a{font-size:13px;color:#666;line-height:1.7;padding-left:22px}
+
+.footer{background:#fff;border-top:0.5px solid rgba(0,0,0,0.08);padding:2rem 2.5rem;margin-top:3rem}
+.footer-inner{max-width:800px;margin:0 auto;display:flex;align-items:flex-start;justify-content:space-between;gap:2rem}
+.footer-desc{font-size:12px;color:#888;margin-top:6px;line-height:1.65}
+.footer-info{text-align:right;font-size:12px;color:#888;line-height:1.9}
+.footer-tel{color:#888;text-decoration:none}
+.footer-tel:hover{color:#1D9E75}
+
+.copy-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1a1a1a;color:#fff;font-size:12px;padding:9px 20px;border-radius:20px;opacity:0;transition:opacity 0.2s;pointer-events:none;z-index:999;white-space:nowrap}
+.copy-toast.show{opacity:1}
+
+@media(max-width:600px){
+  nav{padding:0 1.25rem}
+  .nav-links button{padding:6px 9px;font-size:12px}
+  .hero,.about-hero,.courses-hero,.loc-hero,.contact-hero{padding:3.5rem 1.25rem 3rem}
+  .hero h1{font-size:28px}
+  .hero-stats{gap:1.5rem;flex-wrap:wrap}
+  .features-band,.main-section{padding-left:1.25rem;padding-right:1.25rem}
+  .review-grid,.form-2,.channel-row{grid-template-columns:1fr}
+  .transport-grid{grid-template-columns:1fr}
+  .team-row{grid-template-columns:1fr 1fr}
+  .footer-inner{flex-direction:column;gap:1rem}
+  .footer-info{text-align:left}
+}
+</style>
+</head>
+<body>
+
+<div id="copy-toast" class="copy-toast">이메일 주소가 복사되었습니다</div>
+
+<nav>
+  <div class="logo" onclick="showPage('home')">
+    <div class="logo-mark"><i class="ti ti-brain"></i></div>
+    <div>
+      <div class="logo-text">AI 평생교육원</div>
+      <div class="logo-sub">Lifelong AI Education</div>
+    </div>
+  </div>
+  <div class="nav-links">
+    <button onclick="showPage('home')" id="nav-home" class="active">메인</button>
+    <button onclick="showPage('about')" id="nav-about">소개</button>
+    <button onclick="showPage('courses')" id="nav-courses">과정안내</button>
+    <button onclick="showPage('location')" id="nav-location">오시는길</button>
+    <button onclick="showPage('contact')" id="nav-contact">문의</button>
+  </div>
+</nav>
+
+<!-- ===== 메인 ===== -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <div class="hero-eyebrow"><div class="eyebrow-line"></div><span class="eyebrow-text">교육부 인가 평생교육원 · 설립 2026</span></div>
+    <h1>AI 시대를 준비하는<br><em>가장 신뢰할 수 있는</em><br>배움의 공간</h1>
+    <p class="hero-desc">누구나, 언제든지, 자신의 속도로. 인공지능 전문 교육기관에서 실무 중심의 체계적인 AI 역량을 키워보세요.</p>
+    <div class="hero-actions">
+      <button class="btn-fill" onclick="showPage('courses')">과정 살펴보기 <i class="ti ti-arrow-right"></i></button>
+      <button class="btn-ghost" onclick="showPage('about')">교육원 소개</button>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item"><div class="num">3,200<span>+</span></div><div class="lbl">누적 수료생</div></div>
+      <div class="stat-item"><div class="num">94<span>%</span></div><div class="lbl">수강생 만족도</div></div>
+      <div class="stat-item"><div class="num">2026<span>년</span></div><div class="lbl">설립</div></div>
+      <div class="stat-item"><div class="num">8<span>개</span></div><div class="lbl">운영 과정</div></div>
+    </div>
+  </div>
+
+  <div class="features-band">
+    <div class="features-band-inner">
+      <div style="margin-bottom:2rem">
+        <div class="overline">왜 AI 평생교육원인가</div>
+        <div class="section-title">전문성과 접근성, 두 가지를 모두</div>
+      </div>
+      <div class="feature-grid">
+        <div class="feature-cell"><i class="ti ti-certificate"></i><h3>공인 자격 과정</h3><p>국가·민간 자격증 취득을 위한 체계적 커리큘럼</p></div>
+        <div class="feature-cell"><i class="ti ti-users"></i><h3>소규모 밀착 지도</h3><p>최대 20명 소규모 수업, 강사 집중 피드백</p></div>
+        <div class="feature-cell"><i class="ti ti-device-laptop"></i><h3>온·오프라인 병행</h3><p>현장 실습과 온라인 복습 강의 동시 제공</p></div>
+        <div class="feature-cell"><i class="ti ti-briefcase"></i><h3>취업·창업 연계</h3><p>협력 기업 취업 추천 및 AI 창업 컨설팅 지원</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-section">
+    <div class="overline">수강생 후기</div>
+    <h2 class="section-title">배움을 경험한 분들의 이야기</h2>
+    <div class="review-grid">
+      <div class="review-card"><p class="review-quote">"비전공자인 저도 AI 기초부터 실습까지 무리 없이 따라갈 수 있었습니다. 강사님의 설명이 정말 친절하고 명확했어요."</p><div class="review-author">이수진</div><div class="review-course">AI 활용 기초 과정 수료</div></div>
+      <div class="review-card"><p class="review-quote">"직장 다니면서 주말 과정을 수강했는데, 온라인 강의로 보충할 수 있어 전혀 부담스럽지 않았습니다."</p><div class="review-author">박민준</div><div class="review-course">머신러닝 실무 과정 수료</div></div>
+      <div class="review-card"><p class="review-quote">"단순한 도구 사용법이 아닌, AI의 원리와 활용 전략을 함께 배울 수 있어 실무에서도 큰 도움이 됩니다."</p><div class="review-author">최예린</div><div class="review-course">LLM 서비스 개발 과정 수료</div></div>
+      <div class="review-card"><p class="review-quote">"50대인 제가 처음으로 AI를 제대로 배웠습니다. 나이에 상관없이 배울 수 있다는 걸 증명해 주셨어요."</p><div class="review-author">김영철</div><div class="review-course">데이터 리터러시 입문 수료</div></div>
+    </div>
+    <div style="text-align:center;margin-top:2rem">
+      <button class="btn-fill" onclick="showPage('contact')">수강 상담 신청 <i class="ti ti-arrow-right"></i></button>
+    </div>
+  </div>
+
+  <div class="footer"><div class="footer-inner"><div><div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><div class="logo-mark" style="width:26px;height:26px;border-radius:6px"><i class="ti ti-brain" style="font-size:14px"></i></div><span style="font-size:13px;font-weight:600">AI 평생교육원</span></div><div class="footer-desc">교육부 인가 AI 전문 평생교육기관 · 설립 2026<br>© 2026 AI 평생교육원. All rights reserved.</div></div><div class="footer-info">경기도 의정부시 송양로<br><a href="tel:0212345678" class="footer-tel">02-1234-5678</a> · info@aiedu.or.kr<br>평일 09:00–21:00 · 토 10:00–17:00</div></div></div>
+</div>
+
+<!-- ===== 소개 ===== -->
+<div class="page" id="page-about">
+  <div class="about-hero">
+    <div class="hero-eyebrow"><div class="eyebrow-line"></div><span class="eyebrow-text">교육원 소개</span></div>
+    <p class="about-pull">AI 기술이 세상을 바꾸는 속도보다,<br><em>우리의 교육이 먼저 앞서가야 합니다.</em></p>
+    <p class="about-body">2026년 설립된 AI 평생교육원은 기술과 사람을 잇는 교육을 실천합니다. 빠르게 변화하는 AI 기술의 흐름 속에서 현장에서 바로 쓸 수 있는 역량을 누구나 갖출 수 있도록, 실무 중심의 커리큘럼 개발에 집중하고 있습니다. 연령, 직업, 학력에 상관없이 배움의 기회는 열려 있어야 한다고 믿습니다.</p>
+  </div>
+  <div class="main-section">
+    <div class="overline">교육 철학</div>
+    <h2 class="section-title">우리가 추구하는 세 가지 가치</h2>
+    <div class="value-list">
+      <div class="value-item"><span class="value-num">01</span><div class="value-content"><h3>실무 중심의 배움</h3><p>이론을 배우되, 반드시 현업에서 적용할 수 있는 기술과 사례로 연결합니다.</p></div></div>
+      <div class="value-item"><span class="value-num">02</span><div class="value-content"><h3>개인 맞춤형 교육</h3><p>학습자의 배경과 목표에 따라 커리큘럼 경로를 안내합니다.</p></div></div>
+      <div class="value-item"><span class="value-num">03</span><div class="value-content"><h3>지속적인 성장 지원</h3><p>수료 후에도 학습 커뮤니티, 자료 접근, 취업 연계 서비스를 통해 함께합니다.</p></div></div>
+    </div>
+    <div class="sep"></div>
+    <div class="overline">강사진</div>
+    <h2 class="section-title">함께하는 전문가들</h2>
+    <p class="section-body" style="margin-bottom:0">현직 AI 엔지니어, 데이터 사이언티스트, 교육 전문가로 구성된 강사진이 최신 트렌드를 교육에 바로 반영합니다.</p>
+    <div class="team-row">
+      <div class="team-card"><div class="avatar">김현</div><div class="team-name">김현우 원장</div><div class="team-role">AI 정책 · 교육과정 총괄<br>前 KAIST AI 연구소</div></div>
+      <div class="team-card"><div class="avatar">박지</div><div class="team-name">박지연 교수</div><div class="team-role">머신러닝 · 딥러닝<br>前 삼성 SDS AI팀</div></div>
+      <div class="team-card"><div class="avatar">최민</div><div class="team-name">최민서 강사</div><div class="team-role">AI 활용 · 업무 자동화<br>現 스타트업 CTO</div></div>
+      <div class="team-card"><div class="avatar">이승</div><div class="team-name">이승준 강사</div><div class="team-role">데이터 분석 · 시각화<br>前 카카오 데이터팀</div></div>
+    </div>
+  </div>
+  <div class="footer"><div class="footer-inner"><div><div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><div class="logo-mark" style="width:26px;height:26px;border-radius:6px"><i class="ti ti-brain" style="font-size:14px"></i></div><span style="font-size:13px;font-weight:600">AI 평생교육원</span></div><div class="footer-desc">교육부 인가 AI 전문 평생교육기관 · 설립 2026<br>© 2026 AI 평생교육원.</div></div><div class="footer-info">경기도 의정부시 송양로<br><a href="tel:0212345678" class="footer-tel">02-1234-5678</a> · info@aiedu.or.kr</div></div></div>
+</div>
+
+<!-- ===== 과정안내 ===== -->
+<div class="page" id="page-courses">
+  <div class="courses-hero">
+    <div class="hero-eyebrow"><div class="eyebrow-line"></div><span class="eyebrow-text">과정안내</span></div>
+    <h1 style="font-size:32px;font-weight:600;letter-spacing:-0.03em;line-height:1.3;margin-bottom:1rem">나에게 맞는 AI 과정을<br>찾아보세요</h1>
+    <p style="font-size:14px;color:#555;line-height:1.75;max-width:440px">기초부터 전문가 과정까지, 목표에 따라 선택할 수 있는 다양한 커리큘럼을 운영합니다.</p>
+  </div>
+  <div class="main-section">
+    <div class="course-tier">
+      <div class="tier-label"><span class="tier-badge basic">입문 과정</span></div>
+      <div class="course-row"><div class="course-row-inner"><div class="course-icon-wrap"><i class="ti ti-robot"></i></div><div><div class="c-title">AI 활용 기초 과정</div><div class="c-desc">ChatGPT, Gemini 등 생성형 AI 도구를 업무에 바로 활용할 수 있는 실습 중심 입문 과정.</div><div class="c-meta"><span class="pill accent">8주</span><span class="pill">주 2회</span><span class="pill">온·오프라인</span><span class="pill">비전공자 환영</span></div></div></div></div>
+      <div class="course-row"><div class="course-row-inner"><div class="course-icon-wrap"><i class="ti ti-table"></i></div><div><div class="c-title">데이터 리터러시 입문</div><div class="c-desc">엑셀부터 시작해 데이터를 읽고 해석하는 능력을 기르는 과정.</div><div class="c-meta"><span class="pill accent">6주</span><span class="pill">주 1회</span><span class="pill">오프라인</span></div></div></div></div>
+    </div>
+    <div class="course-tier">
+      <div class="tier-label"><span class="tier-badge advanced">심화 과정</span></div>
+      <div class="course-row"><div class="course-row-inner"><div class="course-icon-wrap purple"><i class="ti ti-brain"></i></div><div><div class="c-title">머신러닝 실무 과정</div><div class="c-desc">Python을 활용한 머신러닝 모델 설계, 학습, 평가까지. 실전 프로젝트 포함.</div><div class="c-meta"><span class="pill accent">12주</span><span class="pill">주 2회</span><span class="pill">온·오프라인</span></div></div></div></div>
+      <div class="course-row"><div class="course-row-inner"><div class="course-icon-wrap purple"><i class="ti ti-message-chatbot"></i></div><div><div class="c-title">LLM 서비스 개발 과정</div><div class="c-desc">LLM 기반 AI 서비스 기획부터 API 연동, 배포까지. 포트폴리오 완성.</div><div class="c-meta"><span class="pill accent">16주</span><span class="pill">주 2회</span><span class="pill">오프라인</span></div></div></div></div>
+      <div class="course-row"><div class="course-row-inner"><div class="course-icon-wrap purple"><i class="ti ti-chart-dots"></i></div><div><div class="c-title">데이터 사이언스 전문가 과정</div><div class="c-desc">수집부터 분석, 시각화, 예측 모델 구축까지. 종합 집중 과정.</div><div class="c-meta"><span class="pill accent">20주</span><span class="pill">주 3회</span><span class="pill">온·오프라인</span></div></div></div></div>
+    </div>
+    <div class="course-tier">
+      <div class="tier-label"><span class="tier-badge special">직군별 특별 과정</span></div>
+      <div class="course-row"><div class="course-row-inner"><div class="course-icon-wrap amber"><i class="ti ti-building-store"></i></div><div><div class="c-title">비즈니스 AI 활용 과정</div><div class="c-desc">마케팅·기획·영업 직군을 위한 AI 도구 실무 적용.</div><div class="c-meta"><span class="pill accent">8주</span><span class="pill">주 1회</span><span class="pill">온라인</span></div></div></div></div>
+      <div class="course-row"><div class="course-row-inner"><div class="course-icon-wrap amber"><i class="ti ti-school"></i></div><div><div class="c-title">교사 AI 연수 과정</div><div class="c-desc">교육 현장에서 AI를 활용하는 수업 설계와 도구 활용법.</div><div class="c-meta"><span class="pill accent">4주</span><span class="pill">집중 과정</span><span class="pill">오프라인</span></div></div></div></div>
+    </div>
+    <div style="text-align:center;padding:1rem 0">
+      <button class="btn-fill" onclick="showPage('contact')">수강 상담 신청 <i class="ti ti-arrow-right"></i></button>
+    </div>
+  </div>
+  <div class="footer"><div class="footer-inner"><div><div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><div class="logo-mark" style="width:26px;height:26px;border-radius:6px"><i class="ti ti-brain" style="font-size:14px"></i></div><span style="font-size:13px;font-weight:600">AI 평생교육원</span></div><div class="footer-desc">교육부 인가 AI 전문 평생교육기관 · 설립 2026<br>© 2026 AI 평생교육원.</div></div><div class="footer-info">경기도 의정부시 송양로<br><a href="tel:0212345678" class="footer-tel">02-1234-5678</a> · info@aiedu.or.kr</div></div></div>
+</div>
+
+<!-- ===== 오시는길 ===== -->
+<div class="page" id="page-location">
+  <div class="loc-hero">
+    <div class="hero-eyebrow"><div class="eyebrow-line"></div><span class="eyebrow-text">오시는길</span></div>
+    <h1 style="font-size:32px;font-weight:600;letter-spacing:-0.03em;line-height:1.3;margin-bottom:1rem">편하게 찾아오실 수 있도록<br>안내해드립니다</h1>
+    <p style="font-size:14px;color:#555;line-height:1.75">대중교통과 자가용 모두 편리하게 이용 가능하며, 주차 공간을 무료로 제공합니다.</p>
+  </div>
+  <div class="main-section">
+    <div class="map-frame">
+      <iframe
+        src="https://www.google.com/maps?q=경기도+의정부시+송양로&output=embed"
+        width="100%" height="220" style="border:0;display:block" allowfullscreen loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="AI 평생교육원 위치 — 경기도 의정부시 송양로"></iframe>
+      <div class="info-rows">
+        <div class="info-row"><span class="info-label">주소</span><span>경기도 의정부시 송양로</span></div>
+        <div class="info-row"><span class="info-label">전화</span><span><a href="tel:0212345678" style="color:#1D9E75;text-decoration:none;font-weight:600">02-1234-5678</a></span></div>
+        <div class="info-row"><span class="info-label">운영시간</span><span>평일 09:00–21:00 · 토요일 10:00–17:00 · 일요일 휴무</span></div>
+        <div class="info-row"><span class="info-label">이메일</span><span style="color:#1D9E75;cursor:pointer;font-weight:600" onclick="copyEmail()">info@aiedu.or.kr</span></div>
+      </div>
+    </div>
+    <div class="sep"></div>
+    <div class="overline">교통편</div>
+    <h2 class="section-title">어떻게 오시나요</h2>
+    <div class="transport-grid">
+      <div class="transport-card"><i class="ti ti-train"></i><h3>지하철</h3><p>1호선 의정부역 하차 후 버스 또는 택시 이용<br>경전철 의정부중앙역 도보 10분</p></div>
+      <div class="transport-card"><i class="ti ti-bus"></i><h3>버스</h3><p>의정부시 송양로 정류장 하차<br>시내버스 다수 노선 경유</p></div>
+      <div class="transport-card"><i class="ti ti-car"></i><h3>자가용</h3><p>건물 내 주차 공간 이용 가능<br>네비게이션: "의정부시 송양로" 검색</p></div>
+    </div>
+    <div class="sep"></div>
+    <div class="overline">편의시설</div>
+    <h2 class="section-title">교육원 내 시설 안내</h2>
+    <div class="transport-grid">
+      <div class="transport-card"><i class="ti ti-armchair"></i><h3>휴게 라운지</h3><p>수업 전후 자유롭게 이용 가능한 카페테리아 겸 라운지</p></div>
+      <div class="transport-card"><i class="ti ti-device-desktop"></i><h3>실습 PC실</h3><p>최신 사양 실습 PC 40대 구비. 개인 노트북 지참도 가능</p></div>
+      <div class="transport-card"><i class="ti ti-accessible"></i><h3>배리어프리</h3><p>엘리베이터, 장애인 화장실, 경사로 등 완비</p></div>
+    </div>
+  </div>
+  <div class="footer"><div class="footer-inner"><div><div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><div class="logo-mark" style="width:26px;height:26px;border-radius:6px"><i class="ti ti-brain" style="font-size:14px"></i></div><span style="font-size:13px;font-weight:600">AI 평생교육원</span></div><div class="footer-desc">교육부 인가 AI 전문 평생교육기관 · 설립 2026<br>© 2026 AI 평생교육원.</div></div><div class="footer-info">경기도 의정부시 송양로<br><a href="tel:0212345678" class="footer-tel">02-1234-5678</a> · info@aiedu.or.kr</div></div></div>
+</div>
+
+<!-- ===== 문의 ===== -->
+<div class="page" id="page-contact">
+  <div class="contact-hero">
+    <div class="hero-eyebrow"><div class="eyebrow-line"></div><span class="eyebrow-text">문의</span></div>
+    <h1 style="font-size:32px;font-weight:600;letter-spacing:-0.03em;line-height:1.3;margin-bottom:1rem">궁금한 점을 편하게<br>물어보세요</h1>
+    <p style="font-size:14px;color:#555;line-height:1.75;max-width:440px;margin-bottom:1.75rem">수강 상담, 과정 문의, 단체 교육 협의 등 어떤 질문이든 성심껏 답변드리겠습니다.</p>
+    <div class="channel-row">
+      <a href="tel:0212345678" class="channel-card">
+        <div class="channel-icon"><i class="ti ti-phone"></i></div>
+        <div>
+          <div class="channel-label">전화 상담</div>
+          <div class="channel-value">02-1234-5678</div>
+          <div class="channel-action">눌러서 바로 전화 연결</div>
+        </div>
+      </a>
+      <div class="channel-card" style="opacity:0.55;cursor:default">
+        <div class="channel-icon kakao"><i class="ti ti-brand-kakao"></i></div>
+        <div>
+          <div class="channel-label">카카오 채널 <span class="kakao-badge">준비중</span></div>
+          <div class="channel-value">@AI평생교육원</div>
+          <div class="channel-action kakao-action">오픈 예정</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-section">
+    <div class="overline">전화 상담 신청</div>
+    <h2 class="section-title">연락처를 남겨주시면<br>담당자가 직접 전화드립니다</h2>
+    <p class="section-body" style="margin-bottom:1.5rem">이름과 연락처만 남겨주시면 됩니다. 부담 없이 남겨주세요. 영업일 기준 당일 내 연락드립니다.</p>
+    <a href="https://forms.gle/EBubYcHvxckAxeNq7" target="_blank" class="btn-fill" style="display:inline-flex;font-size:14px;padding:13px 28px;border-radius:10px;text-decoration:none">
+      <i class="ti ti-phone-call"></i> 전화 상담 신청하기
+    </a>
+
+    <div class="sep"></div>
+
+    <div class="overline">예약 상담</div>
+    <h2 class="section-title">원하는 시간에 상담 예약</h2>
+    <p class="section-body" style="margin-bottom:1.25rem">네이버 예약을 통해 원하시는 날짜와 시간에 상담을 예약하실 수 있습니다.</p>
+    <div style="background:#f5f5f3;border-radius:12px;padding:1.75rem;text-align:center;border:0.5px solid rgba(0,0,0,0.08)">
+      <button disabled style="background:#ccc;color:#fff;border:none;padding:13px 32px;border-radius:8px;font-size:14px;font-weight:600;cursor:not-allowed;font-family:inherit;display:inline-flex;align-items:center;gap:8px;margin-bottom:10px">
+        <i class="ti ti-calendar"></i> 네이버 예약으로 상담 신청
+      </button>
+      <div style="font-size:12px;color:#aaa;display:flex;align-items:center;justify-content:center;gap:6px">
+        <span style="display:inline-block;background:#e0e0e0;color:#999;font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px">준비중</span>
+        곧 오픈될 예정입니다
+      </div>
+    </div>
+
+    <div class="sep"></div>
+    <div class="overline">자주 묻는 질문</div>
+    <h2 class="section-title">FAQ</h2>
+    <div style="margin-top:1rem">
+      <div class="faq-item"><div class="faq-q"><span class="faq-q-badge">Q</span>비전공자도 수강할 수 있나요?</div><div class="faq-a">입문 과정은 수학·코딩 지식 없이도 수강 가능합니다. 상담을 통해 적합한 과정을 추천받으실 수 있습니다.</div></div>
+      <div class="faq-item"><div class="faq-q"><span class="faq-q-badge">Q</span>수강료 분할 납부가 가능한가요?</div><div class="faq-a">최대 3개월 무이자 할부 가능하며, 국민내일배움카드 사용 가능 과정도 운영합니다.</div></div>
+      <div class="faq-item"><div class="faq-q"><span class="faq-q-badge">Q</span>수업을 빠진 경우 보강이 가능한가요?</div><div class="faq-a">모든 수업은 녹화되어 수강 기간 내 온라인으로 다시 볼 수 있으며, 월 1회 보강 수업도 신청 가능합니다.</div></div>
+      <div class="faq-item"><div class="faq-q"><span class="faq-q-badge">Q</span>수료 후 취업 지원이 있나요?</div><div class="faq-a">협력 기업 채용 연계, 포트폴리오 리뷰, AI 창업 컨설팅을 수료생에게 무료로 제공합니다.</div></div>
+    </div>
+  </div>
+  <div class="footer"><div class="footer-inner"><div><div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><div class="logo-mark" style="width:26px;height:26px;border-radius:6px"><i class="ti ti-brain" style="font-size:14px"></i></div><span style="font-size:13px;font-weight:600">AI 평생교육원</span></div><div class="footer-desc">교육부 인가 AI 전문 평생교육기관 · 설립 2026<br>© 2026 AI 평생교육원.</div></div><div class="footer-info">경기도 의정부시 송양로<br><a href="tel:0212345678" class="footer-tel">02-1234-5678</a> · info@aiedu.or.kr</div></div></div>
+</div>
+
+<script>
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links button').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  document.getElementById('nav-' + id).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function copyEmail() {
+  navigator.clipboard.writeText('info@aiedu.or.kr').then(() => {
+    const t = document.getElementById('copy-toast');
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2200);
+  });
+}
+</script>
+</body>
+</html>
